@@ -1,0 +1,373 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+ 
+# GNU Make 4.3
+# Built for x86_64-pc-msys
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+ 
+
+# Make data base, printed on Thu Feb 17 18:00:35 2022
+
+# Variables
+
+# environment
+SYSTEMDRIVE = C:
+# environment
+PDDIR = C:/Users/przem/bin/pure-data/pd-0.51.4
+# environment
+LC_ALL = C
+# environment
+USERPROFILE = C:\Users\przem
+# environment
+LOCALAPPDATA = C:\Users\przem\AppData\Local
+# environment
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-9dd31942-aa72-486f-942d-b0d36ae77487-sock
+# environment
+VSCODE_CWD = D:\code\pd-externals\pd-mi
+# environment
+MINGW_PREFIX = C:/msys64/mingw64
+# environment
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
+# environment
+SYSTEMROOT = C:\WINDOWS
+# environment
+PROCESSOR_LEVEL = 6
+# environment
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+# default
+MAKE_COMMAND := make
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+ACLOCAL_PATH = C:\msys64\mingw64\share\aclocal;C:\msys64\usr\share\aclocal
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5124_RYFUDDHVVSKBOHXL
+# environment
+ORIGINAL_TEMP = C:/Users/przem/AppData/Local/Temp
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = D:/code/pd-externals/pd-mi
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+HOSTNAME = dell
+# environment
+PS1 = \[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[35m\]$MSYSTEM\[\e[0m\] \[\e[33m\]\w\[\e[0m\]\n\$ 
+# environment
+XDG_DATA_DIRS = C:\msys64\mingw64\share\;C:\msys64\usr\local\share\;C:\msys64\usr\share\
+# environment
+OLDPWD = D:/code/pd-externals
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\przem\AppData\Roaming\Code\CachedData\f80445acd5a3dadef24aa209168452a3d97cc326
+# environment
+LANG = C
+# default
+.LOADED := 
+# environment
+TMP = /tmp
+# default
+.INCLUDE_DIRS = /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MSYSCON = mintty.exe
+# environment
+PKG_CONFIG_PATH = C:\msys64\mingw64\lib\pkgconfig;C:\msys64\mingw64\share\pkgconfig
+# environment
+INTEL_DEV_REDIST = C:\Program Files (x86)\Common Files\Intel\Shared Libraries\
+# environment
+ONEDRIVE = C:\Users\przem\OneDrive
+# makefile
+CURDIR := /d/code/pd-externals/pd-mi
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+MSYSTEM_CARCH = x86_64
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+PROGRAMFILES = C:\Program Files
+# environment
+MFLAGS = -pqrR
+# default
+.SHELLFLAGS := -c
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile
+MAKEFILE_LIST := 
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 5124
+# environment
+CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+MINGW_CHOST = x86_64-w64-mingw32
+# automatic
+*F = $(notdir $*)
+# environment
+MANPATH = C:\msys64\mingw64\local\man;C:\msys64\mingw64\share\man;C:\msys64\usr\local\man;C:\msys64\usr\share\man;C:\msys64\usr\man;C:\msys64\share\man
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+ONEDRIVECONSUMER = C:\Users\przem\OneDrive
+# default
+MAKE_HOST := x86_64-pc-msys
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+INFOPATH = C:\msys64\usr\local\info;C:\msys64\usr\share\info;C:\msys64\usr\info;C:\msys64\share\info
+# makefile
+SHELL = /bin/sh
+# environment
+ORIGINAL_PATH = C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\
+# environment
+NVCUDASAMPLES11_3_ROOT = C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.3
+# environment
+HOMEPATH = \Users\przem
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 1
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# environment
+WINDIR = C:\WINDOWS
+# environment
+!; = ;\
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /mingw64/bin:/usr/local/bin:/usr/bin:/usr/bin:/c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/c/Users/przem/AppData/Local/Programs/Microsoft VS Code:/c/Users/przem/bin/pure-data/pd-0.51.4/bin
+# environment
+ZES_ENABLE_SYSMAN = 1
+# environment
+COMPUTERNAME = DELL
+# default
+MAKEFILES := 
+# environment
+LOGINSHELL = bash
+# automatic
+^F = $(notdir $^)
+# environment
+MINGW_PACKAGE_PREFIX = mingw-w64-x86_64
+# environment
+PROMPT = $P$G
+# environment
+CHOCOLATEYLASTPATHUPDATE = 132626905877122048
+# environment
+NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
+# environment
+GRADLE_HOME = C:\ProgramData\chocolatey\lib\gradle\tools\gradle-6.8.3
+# environment
+CUDA_PATH_V11_3 = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
+# environment
+LOGONSERVER = \\DELL
+# environment
+CONTITLE = MinGW x64
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+USERNAME = przem
+# environment
+TERM_PROGRAM = mintty
+# environment
+COMMONPROGRAMFILES = C:\Program Files\Common Files
+# environment
+PRINTER = Microsoft Print to PDF
+# automatic
+?F = $(notdir $?)
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+MSYSTEM_CHOST = x86_64-w64-mingw32
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# automatic
++F = $(notdir $+)
+# environment
+CONFIG_SITE = C:/msys64/etc/config.site
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERDOMAIN = DELL
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+GIT_LFS_PATH = C:\Program Files\Git LFS
+# environment
+OS = Windows_NT
+# environment
+CONICON = mingw64.ico
+# environment
+MSYSTEM_PREFIX = C:/msys64/mingw64
+# makefile
+.DEFAULT_GOAL := 
+# environment
+NVM_HOME = C:\Users\przem\AppData\Roaming\nvm
+# environment
+USER = przem
+# default
+MAKE_VERSION := 4.3
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# environment
+NVCUDASAMPLES_ROOT = C:\ProgramData\NVIDIA Corporation\CUDA Samples\v11.3
+# environment
+!D: = d:\code\pd-externals\pd-mi
+# environment
+USERDOMAIN_ROAMINGPROFILE = DELL
+# environment
+NUMBER_OF_PROCESSORS = 4
+# environment
+PUBLIC = C:\Users\Public
+# environment
+_ = C:/Users/przem/AppData/Local/Programs/Microsoft VS Code/Code.exe
+# environment
+APPDATA = C:\Users\przem\AppData\Roaming
+# environment
+HOMEDRIVE = C:
+# environment
+NVM_SYMLINK = C:\Program Files\nodejs
+# environment
+LC_CTYPE = en_US.UTF-8
+# environment
+PROCESSOR_ARCHITECTURE = AMD64
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+MSYSTEM = MINGW64
+# environment
+HOME = /home/przem
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+TEMP = /tmp
+# environment
+TERM = xterm
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\0f4c0f8085240c54fb65bb8708bf8612-1.64.2-main-sock
+# default
+.RECIPEPREFIX := 
+# environment
+ORIGINAL_TMP = C:/Users/przem/AppData/Local/Temp
+# automatic
+<F = $(notdir $<)
+# environment
+WD = C:\msys64\usr\bin\
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# default
+SUFFIXES := 
+# environment
+SESSIONNAME = Console
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# environment
+MIC_LD_LIBRARY_PATH = C:\Program Files (x86)\Common Files\Intel\Shared Libraries\compiler\lib\intel64_win_mic
+# environment
+PROCESSOR_REVISION = 9e09
+# environment
+TERM_PROGRAM_VERSION = 3.5.2
+# environment
+COMMANDER_PATH = C:\Program Files\totalcmd
+# environment
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
+# variable set hash-table stats:
+# Load=144/1024=14%, Rehash=0, Collisions=18/169=11%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 1257402676, inode 844424931289255): 9 files, no impossibilities.
+
+# 9 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+GNUmakefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# files hash-table stats:
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 16 / storage = 133 B / avg = 8 B
+# current buf: size = 8162 B / used = 133 B / count = 16 / avg = 8 B
+
+# strcache performance: lookups = 19 / hit rate = 15%
+# hash-table stats:
+# Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
+# Finished Make data base on Thu Feb 17 18:00:35 2022
+
+ 

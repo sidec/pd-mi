@@ -1,0 +1,12 @@
+[submodule "eurorack"]
+	path = eurorack
+	url = https://github.com/pichenettes/eurorack.git
+[submodule "pd.build"]
+	path = pd.build
+	url = https://github.com/sidec/pd.build.git
+[submodule "pure-data"]
+	path = pure-data
+	url = https://github.com/pure-data/pure-data.git
+[submodule "vb.mi-dev"]
+	path = vb.mi-dev
+	url = https://github.com/v7b1/vb.mi-dev.git

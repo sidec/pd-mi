@@ -1,0 +1,71 @@
+cmake_minimum_required(VERSION 3.0)
+
+set(PRODUCT_NAME pd.mi.wrps~) 
+set(PROJECT_NAME ${project_dir})
+
+# include(${CMAKE_CURRENT_SOURCE_DIR}/../../pd.build/pd.cmake)
+
+# Define the path to the Pure Data sources
+set_pd_sources(${CMAKE_CURRENT_SOURCE_DIR}/../../pure-data/src)
+# Set the output path for the externals  
+set_pd_external_path(${CMAKE_CURRENT_SOURCE_DIR}/../../externals/)
+
+
+# paths to our sources
+set(MUTABLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../vb.mi-dev/source/mutableSources32) # eurorack
+set(STMLIB_PATH ${MUTABLE_PATH}/stmlib)
+set(MI_PATH ${MUTABLE_PATH}/warps)
+
+# SOURCES += eurorack/stmlib/utils/random.cc
+# SOURCES += eurorack/stmlib/dsp/atan.cc
+# SOURCES += eurorack/stmlib/dsp/units.cc
+set(STMLIB_SOURCES 
+	${STMLIB_PATH}/stmlib.h
+	${STMLIB_PATH}/utils/random.cc
+	${STMLIB_PATH}/utils/random.h
+	${STMLIB_PATH}/dsp/units.cc
+	${STMLIB_PATH}/dsp/units.h
+)
+
+# SOURCES += eurorack/warps/dsp/modulator.cc
+# SOURCES += eurorack/warps/dsp/oscillator.cc
+# SOURCES += eurorack/warps/dsp/vocoder.cc
+# SOURCES += eurorack/warps/dsp/filter_bank.cc
+# SOURCES += eurorack/warps/resources.cc
+set(MI_SOURCES
+	${MI_PATH}/dsp/filter_bank.cc
+	${MI_PATH}/dsp/filter_bank.h
+	${MI_PATH}/dsp/limiter.h
+	${MI_PATH}/dsp/modulator.cc
+	${MI_PATH}/dsp/modulator.h
+	${MI_PATH}/dsp/oscillator.cc
+	${MI_PATH}/dsp/oscillator.h
+	${MI_PATH}/dsp/parameters.h
+	${MI_PATH}/dsp/quadrature_oscillator.h
+	${MI_PATH}/dsp/quadrature_transform.h
+	${MI_PATH}/dsp/sample_rate_conversion_filters.h
+	${MI_PATH}/dsp/sample_rate_converter.h
+	${MI_PATH}/dsp/vocoder.cc
+	${MI_PATH}/dsp/vocoder.h
+	${MI_PATH}/resources.cc
+	${MI_PATH}/resources.h
+)
+
+set(BUILD_SOURCES 
+	${PROJECT_NAME}.cpp
+	read_inputs.cpp	
+	read_inputs.hpp
+)
+
+include_directories( ${MUTABLE_PATH})
+
+set(ALL_SOURCES 
+	${STMLIB_SOURCES}
+	${MI_SOURCES}
+	${BUILD_SOURCES}
+)
+
+add_pd_external(${PROJECT_NAME} ${PRODUCT_NAME} "${ALL_SOURCES}")
+
+# add preprocessor macro to avoid asm functions
+# target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)
