@@ -1,1 +1,4 @@
 build
+externals/*.dll.a
+externals/*.dll
+.vscode/*.log

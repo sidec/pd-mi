@@ -7,16 +7,13 @@ make: *** No rule to make target 'all'.  Stop.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Thu Feb 17 18:00:35 2022
+# Make data base, printed on Sat Feb 26 13:58:44 2022
 
 # Variables
 
 # environment
 SYSTEMDRIVE = C:
-# environment
-PDDIR = C:/Users/przem/bin/pure-data/pd-0.51.4
 # environment
 LC_ALL = C
 # environment
@@ -24,9 +21,11 @@ USERPROFILE = C:\Users\przem
 # environment
 LOCALAPPDATA = C:\Users\przem\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-9dd31942-aa72-486f-942d-b0d36ae77487-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-7b20e631-7942-4dcb-87e8-bd512c59634a-sock
 # environment
-VSCODE_CWD = D:\code\pd-externals\pd-mi
+WSLENV = WT_SESSION::WT_PROFILE_ID
+# environment
+VSCODE_CWD = D:\code\pd-externals\pd-sidec
 # environment
 MINGW_PREFIX = C:/msys64/mingw64
 # environment
@@ -44,7 +43,7 @@ MAKE_COMMAND := make
 # environment
 ACLOCAL_PATH = C:\msys64\mingw64\share\aclocal;C:\msys64\usr\share\aclocal
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5124_RYFUDDHVVSKBOHXL
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10808_YTLKHCJCAKTFQKJK
 # environment
 ORIGINAL_TEMP = C:/Users/przem/AppData/Local/Temp
 # environment
@@ -52,7 +51,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # environment
-PWD = D:/code/pd-externals/pd-mi
+PWD = D:/code/pd-externals/pd-sidec
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -62,7 +61,7 @@ PS1 = \[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[35m\]$MSYSTEM\[\e[0m\] \[\e[33m\]\w\[\
 # environment
 XDG_DATA_DIRS = C:\msys64\mingw64\share\;C:\msys64\usr\local\share\;C:\msys64\usr\share\
 # environment
-OLDPWD = D:/code/pd-externals
+OLDPWD = C:/msys64/home/przem
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -81,8 +80,6 @@ TMP = /tmp
 .INCLUDE_DIRS = /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
-# environment
-MSYSCON = mintty.exe
 # environment
 PKG_CONFIG_PATH = C:\msys64\mingw64\lib\pkgconfig;C:\msys64\mingw64\share\pkgconfig
 # environment
@@ -116,13 +113,17 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 5124
+VSCODE_PID = 10808
 # environment
 CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
 MINGW_CHOST = x86_64-w64-mingw32
+# environment
+WT_PROFILE_ID = {17da3cac-b318-431e-8a3e-7fcdefe6d114}
+# environment
+MSYS2_NOSTART = yes
 # automatic
 *F = $(notdir $*)
 # environment
@@ -158,13 +159,11 @@ COMSPEC = C:\WINDOWS\system32\cmd.exe
 # environment
 WINDIR = C:\WINDOWS
 # environment
-!; = ;\
-# environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /mingw64/bin:/usr/local/bin:/usr/bin:/usr/bin:/c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/c/Users/przem/AppData/Local/Programs/Microsoft VS Code:/c/Users/przem/bin/pure-data/pd-0.51.4/bin
+PATH = /mingw64/bin:/usr/local/bin:/usr/bin:/usr/bin:/c/Windows/System32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/c/Users/przem/AppData/Local/Programs/Microsoft VS Code
 # environment
 ZES_ENABLE_SYSMAN = 1
 # environment
@@ -186,6 +185,8 @@ NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
 # environment
 GRADLE_HOME = C:\ProgramData\chocolatey\lib\gradle\tools\gradle-6.8.3
 # environment
+WT_SESSION = 4b796a90-e525-4b16-868c-2d0c37ff7b8a
+# environment
 CUDA_PATH_V11_3 = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
 # environment
 LOGONSERVER = \\DELL
@@ -195,8 +196,6 @@ CONTITLE = MinGW x64
 VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = przem
-# environment
-TERM_PROGRAM = mintty
 # environment
 COMMONPROGRAMFILES = C:\Program Files\Common Files
 # environment
@@ -256,8 +255,6 @@ HOMEDRIVE = C:
 # environment
 NVM_SYMLINK = C:\Program Files\nodejs
 # environment
-LC_CTYPE = en_US.UTF-8
-# environment
 PROCESSOR_ARCHITECTURE = AMD64
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
@@ -272,7 +269,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = /tmp
 # environment
-TERM = xterm
+TERM = xterm-256color
 # environment
 VSCODE_IPC_HOOK = \\.\pipe\0f4c0f8085240c54fb65bb8708bf8612-1.64.2-main-sock
 # default
@@ -287,8 +284,6 @@ WD = C:\msys64\usr\bin\
 ALLUSERSPROFILE = C:\ProgramData
 # default
 SUFFIXES := 
-# environment
-SESSIONNAME = Console
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
@@ -296,13 +291,11 @@ MIC_LD_LIBRARY_PATH = C:\Program Files (x86)\Common Files\Intel\Shared Libraries
 # environment
 PROCESSOR_REVISION = 9e09
 # environment
-TERM_PROGRAM_VERSION = 3.5.2
-# environment
 COMMANDER_PATH = C:\Program Files\totalcmd
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
 # variable set hash-table stats:
-# Load=144/1024=14%, Rehash=0, Collisions=18/169=11%
+# Load=141/1024=14%, Rehash=0, Collisions=20/166=12%
 
 # Pattern-specific Variable Values
 
@@ -310,9 +303,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
 
 # Directories
 
-# . (device 1257402676, inode 844424931289255): 9 files, no impossibilities.
+# . (device 1257402676, inode 844424931289255): 15 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -362,12 +355,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 133 B / avg = 8 B
-# current buf: size = 8162 B / used = 133 B / count = 16 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 188 B / avg = 8 B
+# current buf: size = 8162 B / used = 188 B / count = 22 / avg = 8 B
 
-# strcache performance: lookups = 19 / hit rate = 15%
+# strcache performance: lookups = 25 / hit rate = 12%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
-# Finished Make data base on Thu Feb 17 18:00:35 2022
+# Load=22/8192=0%, Rehash=0, Collisions=0/25=0%
+# Finished Make data base on Sat Feb 26 13:58:44 2022
 
  

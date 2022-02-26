@@ -10,15 +10,11 @@ set_pd_sources(${CMAKE_CURRENT_SOURCE_DIR}/../../pure-data/src)
 # Set the output path for the externals  
 set_pd_external_path(${CMAKE_CURRENT_SOURCE_DIR}/../../externals/)
 
-
 # paths to our sources
 set(MUTABLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../vb.mi-dev/source/mutableSources32) # eurorack
 set(STMLIB_PATH ${MUTABLE_PATH}/stmlib)
 set(MI_PATH ${MUTABLE_PATH}/warps)
 
-# SOURCES += eurorack/stmlib/utils/random.cc
-# SOURCES += eurorack/stmlib/dsp/atan.cc
-# SOURCES += eurorack/stmlib/dsp/units.cc
 set(STMLIB_SOURCES 
 	${STMLIB_PATH}/stmlib.h
 	${STMLIB_PATH}/utils/random.cc
@@ -27,11 +23,6 @@ set(STMLIB_SOURCES
 	${STMLIB_PATH}/dsp/units.h
 )
 
-# SOURCES += eurorack/warps/dsp/modulator.cc
-# SOURCES += eurorack/warps/dsp/oscillator.cc
-# SOURCES += eurorack/warps/dsp/vocoder.cc
-# SOURCES += eurorack/warps/dsp/filter_bank.cc
-# SOURCES += eurorack/warps/resources.cc
 set(MI_SOURCES
 	${MI_PATH}/dsp/filter_bank.cc
 	${MI_PATH}/dsp/filter_bank.h
