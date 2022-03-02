@@ -54,6 +54,7 @@ using std::optional;
 const size_t kBlockSize = plaits::kBlockSize;
 
 double kSampleRate = 48000.0;
+// static const double kCorrectedSampleRate = 47872.34;
 double a0 = (440.0 / 8.0) / kSampleRate;
 
 static t_class* this_class = nullptr;
@@ -101,6 +102,10 @@ struct t_myObj
 };
 
 void myObj_choose_engine(t_myObj* self, t_floatarg e); 
+void setSr(double newsr) {
+            kSampleRate = newsr;
+            a0 = (440.0 / 8.0) / kSampleRate;
+}
 
 static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
 {
@@ -123,6 +128,7 @@ static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
 
         self->sigvs = sys_getblksize();
         
+        
         if(self->sigvs < kBlockSize) {
             pd_error((t_object*)self,
                          "sigvs can't be smaller than %d samples\n", kBlockSize);
@@ -136,8 +142,7 @@ static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
             self->sr = 44100.0;
         
         
-        kSampleRate = self->sr;
-        a0 = (440.0f / 8.0f) / kSampleRate;
+        setSr(self->sr);
         
         // init some params
         self->transposition_ = 0.;
@@ -194,13 +199,14 @@ static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
                         argc -= 2;
                         argv += 2;
                     }
-                }
+                } 
             }
         }
     } else {
         delete self;
         self = NULL;
     }
+    // end of attributes
     
     return (void*)self;
 }
