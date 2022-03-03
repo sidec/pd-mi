@@ -58,5 +58,6 @@ set(ALL_SOURCES
 
 add_pd_external(${PROJECT_NAME} ${PRODUCT_NAME} "${ALL_SOURCES}")
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC M_PI=3.14159265358979323846)
 # add preprocessor macro to avoid asm functions
-# target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)
+target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)

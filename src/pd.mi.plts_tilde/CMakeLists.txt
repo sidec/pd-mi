@@ -138,3 +138,4 @@ endif()
 
 # add preprocessor macro to avoid asm functions
 target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)
+target_compile_definitions(${PROJECT_NAME} PUBLIC M_PI=3.14159265358979323846)

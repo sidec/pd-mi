@@ -3,7 +3,7 @@
 	url = https://github.com/pichenettes/eurorack.git
 [submodule "pd.build"]
 	path = pd.build
-	url = https://github.com/sidec/pd.build.git
+	url = https://github.com/pierreguillot/pd.build.git
 [submodule "pure-data"]
 	path = pure-data
 	url = https://github.com/pure-data/pure-data.git

@@ -1,4 +1,7 @@
-build
+build*
 externals/*.dll.a
 externals/*.dll
 .vscode/*.log
+externals/*.exp
+externals/*.lib
+externals/*.pdb
