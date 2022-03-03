@@ -21,15 +21,10 @@
 //
 // See http://creativecommons.org/licenses/MIT/ for more information.
 
-
 // a clone of mutable instruments' 'warps' module for maxmsp
 // by volker böhm, okt 2019, https://vboehm.net
 
-
 // Original code by Émilie Gillet, https://mutable-instruments.net/
-
-
-
 #include <m_pd.h>
 
 #include "plaits/dsp/dsp.h"
@@ -43,123 +38,121 @@
 #include <cstdlib>
 #include <optional>
 
-
 //#define ENABLE_LFO_MODE
-#pragma warning (disable : 4068 )
+#pragma warning(disable : 4068)
 
 using std::clamp;
 using std::optional;
-
 
 const size_t kBlockSize = plaits::kBlockSize;
 
 double kSampleRate = 48000.0;
 double a0 = (440.0 / 8.0) / kSampleRate;
 
-static t_class* this_class = nullptr;
+static t_class *this_class = nullptr;
 
-struct t_myObj 
+struct t_myObj
 {
     t_object m_obj; // pd object - always placed in first in the object's struct
 
-    plaits::Voice       *voice_;
+    plaits::Voice *voice_;
     plaits::Modulations modulations;
-    plaits::Patch       patch;
-    double              transposition_;
-    double              octave_;
-    long                engine;
-    short               trigger_connected;
-    short               trigger_toggle;
-    
-    char                *shared_buffer;
-    size_t             shared_buffer_bytes;
-    t_outlet           *info_out;
-    
-    double              sr;
-    int                 sigvs;
+    plaits::Patch patch;
+    double transposition_;
+    double octave_;
+    long engine;
+    short trigger_connected;
+    short trigger_toggle;
 
-    double             *out_tmp;
-    double             *aux_tmp;
-    t_inlet            *m_in2;
-    t_inlet            *m_in3;
-    t_inlet            *m_in4;
-    t_inlet            *m_in5;
-    t_inlet            *m_in6;
-    t_inlet            *m_trig;
-    t_inlet            *m_level;
-    t_float            m_f2;
-    t_float            m_f3;
-    t_float            m_f4;
-    t_float            m_f5;
-    t_float            m_f6;
-    t_float            f_trig;
-    t_float            f_level;
-    t_outlet           *m_out;
-    t_outlet           *m_aux;
-    t_float            m_f;
+    char *shared_buffer;
+    size_t shared_buffer_bytes;
+    t_outlet *info_out;
 
+    double sr;
+    int sigvs;
+
+    double *out_tmp;
+    double *aux_tmp;
+    t_inlet *m_in2;
+    t_inlet *m_in3;
+    t_inlet *m_in4;
+    t_inlet *m_in5;
+    t_inlet *m_in6;
+    t_inlet *m_trig;
+    t_inlet *m_level;
+    t_float m_f2;
+    t_float m_f3;
+    t_float m_f4;
+    t_float m_f5;
+    t_float m_f6;
+    t_float f_trig;
+    t_float f_level;
+    t_outlet *m_out;
+    t_outlet *m_aux;
+    t_float m_f;
 };
 
-void myObj_choose_engine(t_myObj* self, t_floatarg e); 
+void myObj_choose_engine(t_myObj *self, t_floatarg e);
 
-static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
+static void *myObj_new(t_symbol *s, int argc, t_atom *argv)
 {
-    t_myObj* self = (t_myObj*)pd_new(this_class);
+    t_myObj *self = (t_myObj *)pd_new(this_class);
 
-    if(self)
+    if (self)
     {
         // 8 audio inputs
-        self->m_in2 = signalinlet_new((t_object *)self, self->m_f2);  
-        self->m_in3 = signalinlet_new((t_object *)self, self->m_f3);  
-        self->m_in4 = signalinlet_new((t_object *)self, self->m_f4);  
-        self->m_in5 = signalinlet_new((t_object *)self, self->m_f5);  
-        self->m_in6 = signalinlet_new((t_object *)self, self->m_f6);  
-        self->m_trig = signalinlet_new((t_object *)self, self->f_trig);  
-        self->m_level = signalinlet_new((t_object *)self, self->f_level);  
+        self->m_in2 = signalinlet_new((t_object *)self, self->m_f2);
+        self->m_in3 = signalinlet_new((t_object *)self, self->m_f3);
+        self->m_in4 = signalinlet_new((t_object *)self, self->m_f4);
+        self->m_in5 = signalinlet_new((t_object *)self, self->m_f5);
+        self->m_in6 = signalinlet_new((t_object *)self, self->m_f6);
+        self->m_trig = signalinlet_new((t_object *)self, self->f_trig);
+        self->m_level = signalinlet_new((t_object *)self, self->f_level);
 
         self->m_out = outlet_new((t_object *)self, &s_signal); // 'out' output
         self->m_aux = outlet_new((t_object *)self, &s_signal); // 'aux' output
         self->info_out = outlet_new((t_object *)self, &s_anything);
 
         self->sigvs = sys_getblksize();
-        
-        if(self->sigvs < kBlockSize) {
-            pd_error((t_object*)self,
-                         "sigvs can't be smaller than %d samples\n", kBlockSize);
+
+        if (self->sigvs < kBlockSize)
+        {
+            pd_error((t_object *)self,
+                     "sigvs can't be smaller than %d samples\n", kBlockSize);
             delete self;
             self = NULL;
             return self;
         }
 
         self->sr = sys_getsr();
-        if(self->sr <= 0)
+        if (self->sr <= 0)
             self->sr = 44100.0;
-        
-        
+
         kSampleRate = self->sr;
         a0 = (440.0f / 8.0f) / kSampleRate;
-        
+
         // init some params
         self->transposition_ = 0.;
         self->octave_ = 0.5;
         self->patch.note = 48.0;
         self->patch.harmonics = 0.1;
-        
+
         // allocate memory
         self->shared_buffer_bytes = 32768;
-        self->shared_buffer = (char*)getbytes(self->shared_buffer_bytes);
+        self->shared_buffer = (char *)getbytes(self->shared_buffer_bytes);
 
-        self->out_tmp = (double*)getbytes(kBlockSize * sizeof(double));
-        self->aux_tmp = (double*)getbytes(kBlockSize * sizeof(double));
+        self->out_tmp = (double *)getbytes(kBlockSize * sizeof(double));
+        self->aux_tmp = (double *)getbytes(kBlockSize * sizeof(double));
 
-        if(self->shared_buffer == NULL) {
-            pd_error((t_object*)self, "mem alloc failed!");
+        if (self->shared_buffer == NULL)
+        {
+            pd_error((t_object *)self, "mem alloc failed!");
             delete self;
             self = NULL;
             return self;
         }
         stmlib::BufferAllocator allocator(self->shared_buffer, self->shared_buffer_bytes);
-        
+
         self->voice_ = new plaits::Voice;
         self->voice_->Init(&allocator);
 
@@ -197,70 +190,80 @@ static void* myObj_new(t_symbol* s, int argc, t_atom *argv)
                 }
             }
         }
-    } else {
+    }
+    else
+    {
         delete self;
         self = NULL;
     }
-    
-    return (void*)self;
+
+    return (void *)self;
 }
 
 void myObj_info(t_myObj *self, t_symbol s)
 {
     plaits::Patch p = self->patch;
     plaits::Modulations m = self->modulations;
-    
-    logpost((t_object*)self,3, "Patch ----------------------->");
-    logpost((t_object*)self,3,"note: %f", p.note);
-    logpost((t_object*)self,3,"harmonics: %f", p.harmonics);
-    logpost((t_object*)self,3,"timbre: %f", p.timbre);
-    logpost((t_object*)self,3,"morph: %f", p.morph);
-    logpost((t_object*)self,3,"freq_mod_amount: %f", p.frequency_modulation_amount);
-    logpost((t_object*)self,3,"timbre_mod_amount: %f", p.timbre_modulation_amount);
-    logpost((t_object*)self,3,"morph_mod_amount: %f", p.morph_modulation_amount);
-    
-    logpost((t_object*)self,3,"engine: %d", p.engine);
-    logpost((t_object*)self,3,"decay: %f", p.decay);
-    logpost((t_object*)self,3,"lpg_colour: %f", p.lpg_colour);
-    
-    logpost((t_object*)self,3,"Modulations ------------>");
-    logpost((t_object*)self,3,"engine: %f", m.engine);
-    logpost((t_object*)self,3,"note: %f", m.note);
-    logpost((t_object*)self,3,"frequency: %f", m.frequency);
-    logpost((t_object*)self,3,"harmonics: %f", m.harmonics);
-    logpost((t_object*)self,3,"timbre: %f", m.timbre);
-    logpost((t_object*)self,3,"morph: %f", m.morph);
-    logpost((t_object*)self,3,"trigger: %f", m.trigger);
-    logpost((t_object*)self,3,"level: %f", m.level);
-    logpost((t_object*)self,3,"freq_patched: %d", m.frequency_patched);
-    logpost((t_object*)self,3,"timbre_patched: %d", m.timbre_patched);
-    logpost((t_object*)self,3,"morph_patched: %d", m.morph_patched);
-    logpost((t_object*)self,3,"trigger_patched: %d", m.trigger_patched);
-    logpost((t_object*)self,3,"level_patched: %d", m.level_patched);
-    logpost((t_object*)self,3,"-----");
+
+    logpost((t_object *)self, 3, "Patch ----------------------->");
+    logpost((t_object *)self, 3, "note: %f", p.note);
+    logpost((t_object *)self, 3, "harmonics: %f", p.harmonics);
+    logpost((t_object *)self, 3, "timbre: %f", p.timbre);
+    logpost((t_object *)self, 3, "morph: %f", p.morph);
+    logpost((t_object *)self, 3, "freq_mod_amount: %f", p.frequency_modulation_amount);
+    logpost((t_object *)self, 3, "timbre_mod_amount: %f", p.timbre_modulation_amount);
+    logpost((t_object *)self, 3, "morph_mod_amount: %f", p.morph_modulation_amount);
+
+    logpost((t_object *)self, 3, "engine: %d", p.engine);
+    logpost((t_object *)self, 3, "decay: %f", p.decay);
+    logpost((t_object *)self, 3, "lpg_colour: %f", p.lpg_colour);
+
+    logpost((t_object *)self, 3, "Modulations ------------>");
+    logpost((t_object *)self, 3, "engine: %f", m.engine);
+    logpost((t_object *)self, 3, "note: %f", m.note);
+    logpost((t_object *)self, 3, "frequency: %f", m.frequency);
+    logpost((t_object *)self, 3, "harmonics: %f", m.harmonics);
+    logpost((t_object *)self, 3, "timbre: %f", m.timbre);
+    logpost((t_object *)self, 3, "morph: %f", m.morph);
+    logpost((t_object *)self, 3, "trigger: %f", m.trigger);
+    logpost((t_object *)self, 3, "level: %f", m.level);
+    logpost((t_object *)self, 3, "freq_patched: %d", m.frequency_patched);
+    logpost((t_object *)self, 3, "timbre_patched: %d", m.timbre_patched);
+    logpost((t_object *)self, 3, "morph_patched: %d", m.morph_patched);
+    logpost((t_object *)self, 3, "trigger_patched: %d", m.trigger_patched);
+    logpost((t_object *)self, 3, "level_patched: %d", m.level_patched);
+    logpost((t_object *)self, 3, "-----");
 }
 
-void calc_note(t_myObj* self)
+void calc_note(t_myObj *self)
 {
 #ifdef ENABLE_LFO_MODE
     int octave = static_cast<int>(self->octave_ * 10.0);
-    if (octave == 0) {
+    if (octave == 0)
+    {
         self->patch.note = -48.37 + self->transposition_ * 60.0;
-    } else if (octave == 9) {
+    }
+    else if (octave == 9)
+    {
         self->patch.note = 60.0 + self->transposition_ * 48.0;
-    } else {
+    }
+    else
+    {
         const double fine = self->transposition_ * 7.0;
         self->patch.note = fine + static_cast<double>(octave) * 12.0;
     }
 #else
     int octave = static_cast<int>(self->octave_ * 9.0);
-    if (octave < 8) {
+    if (octave < 8)
+    {
         const double fine = self->transposition_ * 7.0;
         self->patch.note = fine + static_cast<float>(octave) * 12.0 + 12.0;
-    } else {
+    }
+    else
+    {
         self->patch.note = 60.0 + self->transposition_ * 48.0;
     }
-#endif  // ENABLE_LFO_MODE
+#endif // ENABLE_LFO_MODE
 }
 
 // plug / unplug patch chords...
@@ -304,75 +307,84 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void myObj_choose_engine(t_myObj* self, t_floatarg e) {
-   self->patch.engine = self->engine =  static_cast<int>(e);
+void myObj_choose_engine(t_myObj *self, t_floatarg e)
+{
+    self->patch.engine = self->engine = static_cast<int>(e);
 }
 
-void myObj_get_engine(t_myObj* self, t_symbol s) {
-    
+void myObj_get_engine(t_myObj *self, t_symbol s)
+{
+
     t_atom argv;
-    SETFLOAT(&argv,static_cast<float>(self->voice_->active_engine()));
+    SETFLOAT(&argv, static_cast<float>(self->voice_->active_engine()));
     outlet_anything(self->info_out, gensym("active_engine"), 1, &argv);
 }
 
-#pragma mark ----- main pots -----
+#pragma mark----- main pots -----
 // main pots
 
-void myObj_frequency(t_myObj* self, t_floatarg m) {
+void myObj_frequency(t_myObj *self, t_floatarg m)
+{
     self->transposition_ = clamp(static_cast<double>(m), -1.0, 1.0);
     logpost(self, 3, "self->transposition_ %f", self->transposition_);
     calc_note(self);
 }
 
-void myObj_harmonics(t_myObj* self, t_floatarg h) {
+void myObj_harmonics(t_myObj *self, t_floatarg h)
+{
     self->patch.harmonics = clamp(static_cast<double>(h), 0.0, 1.0);
 }
 
-void myObj_timbre(t_myObj* self, t_floatarg t) {
+void myObj_timbre(t_myObj *self, t_floatarg t)
+{
     self->patch.timbre = clamp(static_cast<double>(t), 0., 1.);
 }
 
-void myObj_morph(t_myObj* self, t_floatarg m) {
+void myObj_morph(t_myObj *self, t_floatarg m)
+{
     self->patch.morph = clamp(static_cast<double>(m), 0., 1.);
 }
 
 // smaller pots
-void myObj_timbre_mod_amount(t_myObj* self, t_floatarg m) {
+void myObj_timbre_mod_amount(t_myObj *self, t_floatarg m)
+{
     self->patch.timbre_modulation_amount = clamp(static_cast<double>(m), -1., 1.);
 }
 
-void myObj_freq_mod_amount(t_myObj* self, t_floatarg m) {
+void myObj_freq_mod_amount(t_myObj *self, t_floatarg m)
+{
     self->patch.frequency_modulation_amount = clamp(static_cast<double>(m), -1., 1.);
 }
 
-void myObj_morph_mod_amount(t_myObj* self, t_floatarg m) {
+void myObj_morph_mod_amount(t_myObj *self, t_floatarg m)
+{
     self->patch.morph_modulation_amount = clamp(static_cast<double>(m), -1., 1.);
 }
 
-
-#pragma mark ----- hidden parameter -----
+#pragma mark----- hidden parameter -----
 
 // hidden parameters
 
-void myObj_decay(t_myObj* self, t_floatarg m) {
+void myObj_decay(t_myObj *self, t_floatarg m)
+{
     self->patch.decay = clamp(static_cast<double>(m), 0., 1.);
 }
-void myObj_lpg_colour(t_myObj* self, t_floatarg m) {
+void myObj_lpg_colour(t_myObj *self, t_floatarg m)
+{
     self->patch.lpg_colour = clamp(static_cast<double>(m), 0., 1.);
 }
 
-void myObj_octave(t_myObj* self, t_floatarg m) {
+void myObj_octave(t_myObj *self, t_floatarg m)
+{
     self->octave_ = clamp(static_cast<double>(m), 0., 1.);
     calc_note(self);
 }
 
-
 // this directly sets the pitch via a midi note
-void myObj_note(t_myObj* self, t_floatarg n) {
+void myObj_note(t_myObj *self, t_floatarg n)
+{
     self->patch.note = n;
 }
-
-
 
 // ---------------------------------------------------- //
 
@@ -386,8 +398,8 @@ static t_int *myObj_perform(t_int *w)
 
     int vs = (int)(w[12]); // sampleframes
     size_t size = kBlockSize;
-    double* out_tmp = self->out_tmp;
-    double* aux_tmp = self->aux_tmp;
+    double *out_tmp = self->out_tmp;
+    double *aux_tmp = self->aux_tmp;
 
     // double  pitch_lp_ = 0.; //self->pitch_lp_;
     size_t count = 0;
@@ -401,7 +413,7 @@ static t_int *myObj_perform(t_int *w)
 
         for (int i = 0; i < 8; i++)
         {
-            t_sample *in = (t_sample *)(w[ins+i]);       
+            t_sample *in = (t_sample *)(w[ins + i]);
             destination[i] = in[count];
         }
 
@@ -427,27 +439,29 @@ static t_int *myObj_perform(t_int *w)
         std::copy(out_tmp, out_tmp + size, out + count);
         std::copy(aux_tmp, aux_tmp + size, aux + count);
     }
-    
+
     return (w + 13);
 }
 
-static void myObj_dsp(t_myObj* self, t_signal **sp)
+static void myObj_dsp(t_myObj *self, t_signal **sp)
 {
 
     // self->trigger_connected = 0;
     // self->modulations.trigger_patched = self->trigger_toggle && self->trigger_connected;
-    
-    if(sys_getblksize() < kBlockSize) {
-        pd_error((t_object*)self, "sigvs can't be smaller than %d samples, sorry!", kBlockSize);
+
+    if (sys_getblksize() < kBlockSize)
+    {
+        pd_error((t_object *)self, "sigvs can't be smaller than %d samples, sorry!", kBlockSize);
         return;
     }
 
-    if(sys_getsr() != self->sr) {
+    if (sys_getsr() != self->sr)
+    {
         self->sr = sys_getsr();
         kSampleRate = self->sr;
         a0 = (440.0f / 8.0f) / kSampleRate;
     }
-    
+
     dsp_add(myObj_perform, 12 /* x+inlets+outlets+s_n */,
             self,
             sp[0]->s_vec, // 8 inlets
@@ -463,11 +477,10 @@ static void myObj_dsp(t_myObj* self, t_signal **sp)
             sp[0]->s_n);
 }
 
+#pragma mark---- free function ----
 
-
-#pragma mark ---- free function ----
-
-void myObj_free(t_myObj* self) {
+void myObj_free(t_myObj *self)
+{
     self->voice_->plaits::Voice::~Voice();
     delete self->voice_;
 
@@ -484,20 +497,21 @@ void myObj_free(t_myObj* self) {
     outlet_free(self->info_out);
     // delete self->modulator;
 
-    if(self->shared_buffer)
+    if (self->shared_buffer)
         freebytes(self->shared_buffer, self->shared_buffer_bytes);
-    
+
     freebytes(self->out_tmp, kBlockSize * sizeof(double));
     freebytes(self->aux_tmp, kBlockSize * sizeof(double));
 }
 
-
-extern "C" {
-    extern void setup_pd0x2emi0x2eplts_tilde(void) {
+extern "C"
+{
+    extern void setup_pd0x2emi0x2eplts_tilde(void)
+    {
         this_class = class_new(gensym("pd.mi.plts~"),
                                (t_newmethod)myObj_new, (t_method)myObj_free,
                                sizeof(t_myObj), CLASS_DEFAULT, A_GIMME, 0);
-        if(this_class)
+        if (this_class)
         {
             CLASS_MAINSIGNALIN(this_class, t_myObj, m_f);
             class_addmethod(this_class, (t_method)myObj_dsp, gensym("dsp"), A_CANT, 0);
@@ -520,13 +534,11 @@ extern "C" {
 
             class_addmethod(this_class, (t_method)myObj_note, gensym("note"), A_FLOAT, 0);
 
-            class_addmethod(this_class, (t_method)myObj_choose_engine,      gensym("engine"), A_FLOAT, 0);
+            class_addmethod(this_class, (t_method)myObj_choose_engine, gensym("engine"), A_FLOAT, 0);
             class_addmethod(this_class, (t_method)myObj_get_engine, gensym("get_engine"), A_DEFSYMBOL, 0);
             class_addmethod(this_class, (t_method)myObj_plug, gensym("plug"), A_GIMME, 0);
             // class_addmethod(this_class, (t_method)myObj_float, gensym("float"), A_FLOAT, 0);
-            class_addmethod(this_class, (t_method)myObj_info,    gensym("info"), A_DEFSYMBOL, 0);
-
-
+            class_addmethod(this_class, (t_method)myObj_info, gensym("info"), A_DEFSYMBOL, 0);
 
             post("vb.mi.plts~ by volker böhm --> https://vboehm.net");
             post("rewritten for Pd as pd.mi.plts~ by przemysław sanecki --> https://software-materialism.org");

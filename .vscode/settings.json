@@ -1,7 +1,6 @@
 {
 	"makefile.extensionOutputFolder": "./.vscode",
 	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-	"cmake.generator": "Unix Makefiles",
 	"C_Cpp.errorSquiggles": "Disabled",
 	"files.associations": {
 		"Makefile*": "makefile",
