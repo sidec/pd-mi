@@ -5,3 +5,4 @@ externals/*.dll
 externals/*.exp
 externals/*.lib
 externals/*.pdb
+externals/*.ilk
