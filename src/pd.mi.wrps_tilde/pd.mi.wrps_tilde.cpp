@@ -25,6 +25,8 @@
 // by volker böhm, okt 2019, https://vboehm.net
 
 // Original code by Émilie Gillet, https://mutable-instruments.net/
+
+
 #include <m_pd.h>
 
 #include "warps/dsp/modulator.h"
@@ -41,7 +43,7 @@ using std::clamp;
 // TODO: work on block size and SR, use libsamplerate for downsampling?
 // original SR: 96 kHz, block size: 60
 
-const size_t kBlockSize = 60; // has to stay like that TODO: why?
+const size_t kBlockSize = 64; // has to stay like that TODO: why?
 
 static t_class *this_class;
 
@@ -356,8 +358,8 @@ extern "C"
             class_addmethod(this_class, (t_method)myObj_plug, gensym("plug"), A_GIMME, 0);
             class_addmethod(this_class, (t_method)myObj_info, gensym("info"), A_GIMME, 0);
 
+            post("pd.mi.wrps~ by przemysław sanecki --> https://software-materialism.org");
             post("vb.mi.wrps~ by volker böhm --> https://vboehm.net");
-            post("rewritten for Pd as pd.mi.wrps~ by przemysław sanecki --> https://software-materialism.org");
             post("a clone of mutable instruments' 'warps' module");
         }
     }
