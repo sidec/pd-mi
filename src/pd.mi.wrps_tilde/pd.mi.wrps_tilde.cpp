@@ -33,7 +33,6 @@
 #include "warps/dsp/oscillator.h"
 #include "read_inputs.hpp"
 
-#include <algorithm>
 #include <cstring>
 #include <cstdlib>
 #include <optional>
@@ -43,7 +42,7 @@ using std::clamp;
 // TODO: work on block size and SR, use libsamplerate for downsampling?
 // original SR: 96 kHz, block size: 60
 
-const size_t kBlockSize = 64; // has to stay like that TODO: why?
+const size_t kBlockSize = 60; // has to stay like that TODO: why?
 
 static t_class *this_class;
 
@@ -54,7 +53,7 @@ struct t_myObj
     warps::Modulator *modulator;
     warps::ReadInputs *read_inputs;
 
-    t_sample adc_inputs[warps::ADC_LAST];
+    double adc_inputs[warps::ADC_LAST];
     short patched[2];
     short easterEgg;
     uint8_t carrier_shape;
@@ -227,10 +226,6 @@ static t_int *myObj_perform(t_int *w)
     t_myObj *self = (t_myObj *)(w[1]);
     t_sample *in1 = (t_sample *)(w[2]);
     t_sample *in2 = (t_sample *)(w[3]);
-    // t_sample* in3 = (t_sample *)(w[4]); // level 1
-    // t_sample* in4 = (t_sample *)(w[5]); // level 2
-    // t_sample* in5 = (t_sample *)(w[6]);
-    // t_sample* in6 = (t_sample *)(w[7]);
     t_sample *out = (t_sample *)(w[8]);
     t_sample *aux = (t_sample *)(w[9]);
     int vs = (int)(w[10]);
@@ -239,19 +234,15 @@ static t_int *myObj_perform(t_int *w)
     warps::FloatFrame *output = self->output;
 
     long count = self->count;
-    t_sample *adc_inputs = self->adc_inputs;
+    double *adc_inputs = self->adc_inputs;
 
     for (int idx = 0; idx < 4; idx++)
     {
         adc_inputs[idx] = ((t_sample *)w[idx + 4])[0];
     }
-    // adc_inputs[0] = in3[0];
-    // adc_inputs[1] = in4[0];
-    // adc_inputs[2] = in5[0];
-    // adc_inputs[3] = in6[0];
     self->read_inputs->Read(self->modulator->mutable_parameters(), adc_inputs, self->patched);
 
-    for (int i = 0; i < vs; i++)
+    for (int i = 0; i < vs; ++i)
     {
         input[count].l = in1[i];
         input[count].r = in2[i];
@@ -267,6 +258,7 @@ static t_int *myObj_perform(t_int *w)
         aux[i] = output[count].r;
     }
 
+    self->count = count;
     return (w + 11);
 }
 

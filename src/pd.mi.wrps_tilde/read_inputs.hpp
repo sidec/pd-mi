@@ -34,11 +34,7 @@ namespace warps {
         ~ReadInputs() { }
         
         void Init();
-#ifdef PD_MAJOR_VERSION 
-        void Read(Parameters* parameters, t_sample *adc_inputs, short* patched);
-#else 
         void Read(Parameters* parameters, double *adc_inputs, short* patched);
-#endif 
         inline uint8_t easter_egg_digit() const {
             if (lp_state_[ADC_LEVEL_1_POT] < 0.05 && \
                 lp_state_[ADC_LEVEL_2_POT] < 0.05 && \

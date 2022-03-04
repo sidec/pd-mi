@@ -55,11 +55,7 @@ namespace warps {
     destination = value; \
 }
     
-#ifdef PD_MAJOR_VERSION 
-    void ReadInputs::Read(Parameters* p, t_sample *adc_inputs, short* patched) {
-#else
     void ReadInputs::Read(Parameters* p, double *adc_inputs, short* patched) {
-#endif
         // Modulation parameters.
 //        BIND(p->channel_drive[0], LEVEL_1, false, 1.6, 0.08, true);     // unipolar input?
 //        BIND(p->channel_drive[1], LEVEL_2, false, 1.6, 0.08, true);     // unipolar input?
