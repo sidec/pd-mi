@@ -1,0 +1,7 @@
+#N canvas 616 238 686 607 16;
+#X obj 169 182 pd.mi.tds~, f 44;
+#X obj 240 296 cyclone/scope~ 301 132 256 3 128 -1 1 0 0 0 0 205 229
+232 74 79 77 96 98 102 0 empty;
+#X floatatom 195 43 5 0 0 0 - - - 0;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
