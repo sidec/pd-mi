@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 set(PRODUCT_NAME pd.mi.plts~) 
 set(PROJECT_NAME ${project_dir})
 
-# include(${CMAKE_CURRENT_SOURCE_DIR}/../../pd.build/pd.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../scripts/pre-target.cmake)
 
 # Define the path to the Pure Data sources
 set_pd_sources(${CMAKE_CURRENT_SOURCE_DIR}/../../pure-data/src)
@@ -136,6 +136,6 @@ if(APPLE)
 	target_link_libraries(${PROJECT_NAME} PUBLIC "-framework Accelerate")
 endif()
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../scripts/post-target.cmake)
 # add preprocessor macro to avoid asm functions
 target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)
-target_compile_definitions(${PROJECT_NAME} PUBLIC M_PI=3.14159265358979323846)

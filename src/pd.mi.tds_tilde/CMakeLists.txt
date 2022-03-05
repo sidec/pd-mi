@@ -4,6 +4,7 @@ set(PRODUCT_NAME pd.mi.tds~)
 set(PROJECT_NAME ${project_dir})
 
 # include(${CMAKE_CURRENT_SOURCE_DIR}/../../pd.build/pd.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../scripts/pre-target.cmake)
 
 # Define the path to the Pure Data sources
 set_pd_sources(${CMAKE_CURRENT_SOURCE_DIR}/../../pure-data/src)
@@ -49,6 +50,7 @@ set(ALL_SOURCES
 
 add_pd_external(${PROJECT_NAME} ${PRODUCT_NAME} "${ALL_SOURCES}")
 
-target_compile_definitions(${PROJECT_NAME} PUBLIC M_PI=3.14159265358979323846)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../scripts/post-target.cmake)
+# target_compile_definitions(${PROJECT_NAME} PUBLIC M_PI=3.14159265358979323846)
 # add preprocessor macro to avoid asm functions
 target_compile_definitions(${PROJECT_NAME} PUBLIC TEST)

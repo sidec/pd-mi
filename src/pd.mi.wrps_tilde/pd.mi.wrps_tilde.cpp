@@ -42,7 +42,7 @@ using std::clamp;
 // TODO: work on block size and SR, use libsamplerate for downsampling?
 // original SR: 96 kHz, block size: 60
 
-const size_t kBlockSize = 60; // has to stay like that TODO: why?
+const size_t kBlockSize = 96; // has to stay like that TODO: why?
 
 static t_class *this_class;
 
