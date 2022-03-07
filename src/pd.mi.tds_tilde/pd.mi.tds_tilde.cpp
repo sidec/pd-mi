@@ -35,6 +35,13 @@
 #include "tides2/poly_slope_generator.h"
 #include "tides2/ramp_extractor.h"
 
+#include <cstring>
+#include <algorithm>
+#include <cstdlib>
+#include <optional>
+
+using std::clamp;
+using std::optional;
 
 const size_t kAudioBlockSize = 8;       // sig vs can't be smaller than this!
 const size_t kNumOutputs = 4;
@@ -200,66 +207,60 @@ void* myObj_new(t_symbol *s, int argc, t_atom *argv)
 }
 
 
+// plug / unplug patch chords...
 
-// void myObj_int(t_myObj* self, long m) {
-    
-//     long innum = proxy_getinlet((t_object *)self);
-    
-//     switch (innum) {
-//         case 5:
-//             self->use_trigger = (m != 0);
-//             break;
-//         case 6:
-//             self->use_clock = (m != 0);
-//             break;
-//     }
-    
-// }
+void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
+{
+    if (argc == 2)
+    {
 
-// void myObj_float(t_myObj* self, double m) {
-    
-//     long innum = proxy_getinlet((t_object *)self);
-    
-//     switch (innum) {
-//         case 0:
-//             self->frequency = m;
-//             break;
-//         case 1:
-//             self->shape = m;
-//             break;
-//         case 2:
-//             self->slope = m;
-//             break;
-//         case 3:
-//             self->smoothness = m;
-//             break;
-//         case 4:
-//             self->shift = m;
-//             break;
-//     }
-    
-// }
+        optional<t_symbol *> plug = atom_getsymbolarg(0, argc, argv);
+        optional<short> value = static_cast<short>(atom_getfloatarg(1, argc, argv));
+        if (plug && value)
+        {
+            const char *name = (*plug)->s_name;
+            // logpost(self, 3, "value %s", name);
+            // logpost(self, 3, "value %i", *value);
+            if (strcmp(name, "trigger") == 0)
+            {
+                self->use_trigger = (*value != 0);
+                logpost(self, 3, "value %i", self->use_trigger);
+            }
+            else if (strcmp(name, "clock") == 0)
+            {
+               self->use_clock = (*value != 0);
+               logpost(self, 3, "value %i", self->use_clock);
+            }
+        }
+    }
+}
+
 
 
 #pragma mark -------- general pots -----------
 
 void myObj_freq(t_myObj* self, t_float m) {
+    verbose(3, "frequency %f", m);
     self->frequency = m;
 }
 
 void myObj_shape(t_myObj* self, t_float m) {
+    verbose(3, "shape %f", m);
     self->shape = m;
 }
 
 void myObj_slope(t_myObj* self, t_float m) {
+    verbose(3, "slope %f", m);
     self->slope = m;
 }
 
 void myObj_smooth(t_myObj* self, t_float m) {
+    verbose(3, "smoothness %f", m);
     self->smoothness = m;
 }
 
 void myObj_shift(t_myObj* self, t_float m) {
+    verbose(3, "shift %f", m);
     self->shift = m;
 }
 
@@ -268,48 +269,37 @@ void myObj_ratio(t_myObj* self, t_float m)
 {
     CONSTRAIN(m, 0, 18);
     self->r_ = kRatios[(int)m];
-//    object_post((t_object*)self, "ratio[%d]: ratio: %f -- q: %d", m, self->r_.ratio, self->r_.q);
+//    post((t_object*)self, "ratio[%d]: ratio: %f -- q: %d", m, self->r_.ratio, self->r_.q);
 }
 
+void output_mode_setter(t_myObj *self, t_float m)
+{
+    long _m = clamp((int)m, 0, 3);
+    verbose(3, "output mode %d", _m);
+    self->output_mode = tides::OutputMode(_m);
+    if (self->output_mode != self->previous_output_mode)
+    {
+        self->poly_slope_generator.Reset();
+        self->previous_output_mode = self->output_mode;
+    }
+}
 
+void ramp_mode_setter(t_myObj *self, t_float m)
+{
+    long _m = clamp((int)m, 0, 2);
+    self->ramp_mode = tides::RampMode(_m);
+}
 
-// t_max_err output_mode_setter(t_myObj *self, void *attr, long ac, t_atom *av)
-// {
-//     if (ac && av) {
-//         t_atom_long m = atom_getlong(av);
-//         self->output_mode = tides::OutputMode(m);
-//         if(self->output_mode != self->previous_output_mode) {
-//             self->poly_slope_generator.Reset();
-//             self->previous_output_mode = self->output_mode;
-//         }
-//     }
-    
-//     return MAX_ERR_NONE;
-// }
-
-
-
-// t_max_err ramp_mode_setter(t_myObj *self, void *attr, long ac, t_atom *av)
-// {
-//     if (ac && av) {
-//         t_atom_long m = atom_getlong(av);
-//         self->ramp_mode = tides::RampMode(m);
-//     }
-    
-//     return MAX_ERR_NONE;
-// }
-
-
-// t_max_err range_setter(t_myObj *self, void *attr, long ac, t_atom *av)
-// {
-//     if (ac && av) {
-//         t_atom_long m = atom_getlong(av);
-//         if( m != 0 ) self->range = tides::RANGE_AUDIO;
-//         else self->range = tides::RANGE_CONTROL;
-//     }
-    
-//     return MAX_ERR_NONE;
-// }
+void range_setter(t_myObj *self, t_float m)
+{
+        long _m = clamp((int)m, 0, 1);
+        if( _m != 0 ) {
+            self->range = tides::RANGE_AUDIO;
+        }
+        else {
+            self->range = tides::RANGE_CONTROL;
+        }
+}
 
 
 #pragma mark -------- DSP Loop ----------
@@ -457,8 +447,8 @@ static t_int *myObj_perform(t_int *w)
 void myObj_dsp(t_myObj* self, t_signal **sp)
 {
     // is a signal connected to the trigger/clock input?
-    // self->trig_connected 
-    // self->clock_connected
+    // self->trig_connected = self->use_trigger;
+    // self->clock_connected = self->use_clock;
     
     if (sys_getblksize() < kAudioBlockSize)
     {
@@ -529,31 +519,19 @@ extern "C"
             class_addmethod(this_class, (t_method)myObj_smooth, gensym("smooth"), A_FLOAT, 0);
             class_addmethod(this_class, (t_method)myObj_ratio, gensym("ratio"), A_FLOAT, 0);
 
+            // ATTRIBUTES ..............
+            // output mode
+            // "GATE AMPLITUDE PHASE FREQUENCY"
+            class_addmethod(this_class, (t_method)output_mode_setter, gensym("output_mode"), A_FLOAT, 0);
+            // ramp mode
+            // "AD LOOPING AR"
+            class_addmethod(this_class, (t_method)ramp_mode_setter, gensym("ramp_mode"), A_FLOAT, 0);
 
-            // // ATTRIBUTES ..............
-            // // output mode
-            // CLASS_ATTR_CHAR(this_class, "output_mode", 0, t_myObj, output_mode);
-            // CLASS_ATTR_ENUMINDEX(this_class, "output_mode", 0, "GATE AMPLITUDE PHASE FREQUENCY");
-            // CLASS_ATTR_LABEL(this_class, "output_mode", 0, "output mode");
-            // CLASS_ATTR_FILTER_CLIP(this_class, "output_mode", 0, 3);
-            // CLASS_ATTR_ACCESSORS(this_class, "output_mode", NULL, (method)output_mode_setter);
-            // CLASS_ATTR_SAVE(this_class, "output_mode", 0);
+            // range
+            // "CONTROL AUDIO"
+            class_addmethod(this_class, (t_method)range_setter, gensym("range"), A_FLOAT, 0);
 
-            // // ramp mode
-            // CLASS_ATTR_CHAR(this_class, "ramp_mode", 0, t_myObj, ramp_mode);
-            // CLASS_ATTR_ENUMINDEX(this_class, "ramp_mode", 0, "AD LOOPING AR");
-            // CLASS_ATTR_LABEL(this_class, "ramp_mode", 0, "ramp mode");
-            // CLASS_ATTR_FILTER_CLIP(this_class, "ramp_mode", 0, 2);
-            // CLASS_ATTR_ACCESSORS(this_class, "ramp_mode", NULL, (method)ramp_mode_setter);
-            // CLASS_ATTR_SAVE(this_class, "ramp_mode", 0);
-
-            // // range
-            // CLASS_ATTR_CHAR(this_class, "range", 0, t_myObj, range);
-            // CLASS_ATTR_ENUMINDEX(this_class, "range", 0, "CONTROL AUDIO");
-            // CLASS_ATTR_LABEL(this_class, "range", 0, "range selector");
-            // CLASS_ATTR_FILTER_CLIP(this_class, "range", 0, 1);
-            // CLASS_ATTR_ACCESSORS(this_class, "range", NULL, (method)range_setter);
-            // CLASS_ATTR_SAVE(this_class, "range", 0);
+            class_addmethod(this_class, (t_method)myObj_plug, gensym("plug"), A_GIMME, 0);
 
             post("pd.mi.tds~ by Przemysław Sanecki -- https://software-materialism.org");
             post("based on vb.mi.tds~ by Volker Böhm -- https://vboehm.net");

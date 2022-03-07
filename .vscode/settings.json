@@ -85,6 +85,10 @@
 		"ios": "cpp",
 		"locale": "cpp",
 		"queue": "cpp",
-		"stack": "cpp"
+		"stack": "cpp",
+		"complex": "cpp",
+		"xlocnum": "cpp",
+		"xtr1common": "cpp",
+		"xutility": "cpp"
 	},
 }
