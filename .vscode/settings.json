@@ -85,6 +85,9 @@
 		"ios": "cpp",
 		"locale": "cpp",
 		"queue": "cpp",
-		"stack": "cpp"
+		"stack": "cpp",
+		"xmemory": "cpp",
+		"xstring": "cpp",
+		"xutility": "cpp"
 	},
 }

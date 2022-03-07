@@ -18,7 +18,7 @@ execute_process(
 include(${CMAKE_CURRENT_SOURCE_DIR}/pd.build/pd.cmake)
 include(scripts/utilities.cmake)
 
-set(TO_BUILD "pd.mi.wrps_tilde", "pd.mi.plts_tilde", "pd.mi.tds_tilde") 
+set(TO_BUILD "pd.mi.wrps2_tilde", "pd.mi.plts_tilde", "pd.mi.tds_tilde") 
 SUBDIRLIST(PROJECT_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src)
 foreach (project_dir ${PROJECT_DIRS})
 	list(FIND TO_BUILD ${project_dir} INCLUDED_IN_BUILD)
