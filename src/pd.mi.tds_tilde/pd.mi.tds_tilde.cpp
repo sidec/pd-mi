@@ -224,12 +224,14 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
             if (strcmp(name, "trigger") == 0)
             {
                 self->use_trigger = (*value != 0);
-                logpost(self, 3, "value %i", self->use_trigger);
+                self->trig_connected = self->use_trigger;
+                logpost(self, 3, "use trig %i", self->use_trigger);
             }
             else if (strcmp(name, "clock") == 0)
             {
                self->use_clock = (*value != 0);
-               logpost(self, 3, "value %i", self->use_clock);
+                self->clock_connected = self->use_clock;
+               logpost(self, 3, "use clock %i", self->use_clock);
             }
         }
     }
@@ -424,8 +426,8 @@ static t_int *myObj_perform(t_int *w)
 
 
         for(int i=0; i<kAudioBlockSize; ++i) {
-            for(int j=9; j<kNumOutputs; ++j) {
-                ((t_sample*)w[j])[i + count] = out[i].channel[j] * 0.1f;
+            for(int j=0; j<kNumOutputs; ++j) {
+                ((t_sample*)w[j+9])[i + count] = out[i].channel[j] * 0.1f;
             }
         }
         
@@ -447,9 +449,7 @@ static t_int *myObj_perform(t_int *w)
 void myObj_dsp(t_myObj* self, t_signal **sp)
 {
     // is a signal connected to the trigger/clock input?
-    // self->trig_connected = self->use_trigger;
-    // self->clock_connected = self->use_clock;
-    
+        
     if (sys_getblksize() < kAudioBlockSize)
     {
         pd_error((t_object *)self, "sigvs can't be smaller than %d samples, sorry!", kAudioBlockSize);
