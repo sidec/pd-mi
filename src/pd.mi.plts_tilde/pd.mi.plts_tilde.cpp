@@ -517,6 +517,11 @@ extern "C"
         this_class = class_new(gensym("pd.mi.plts~"),
                                (t_newmethod)myObj_new, (t_method)myObj_free,
                                sizeof(t_myObj), CLASS_DEFAULT, A_GIMME, 0);
+        class_addcreator(
+            (t_newmethod)myObj_new,
+            gensym("mi/plts~"),
+            A_GIMME, 0
+        );
         if (this_class)
         {
             CLASS_MAINSIGNALIN(this_class, t_myObj, m_f);
