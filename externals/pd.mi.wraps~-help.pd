@@ -1,0 +1,108 @@
+#N canvas 690 39 1080 1025 16;
+#X obj 725 113 loadbang;
+#X msg 727 148 \; pd dsp 1 \;;
+#X obj 133 852 output~;
+#X obj 421 708 scope~ 312 237 11 3 128 -1 1 0 0 0 0 205 229 232 74
+79 77 96 98 102 0 empty;
+#X floatatom 428 648 5 0 0 0 - - - 0;
+#X obj 123 69 vradio 15 1 0 8 empty empty empty 0 -8 0 10 #fcfcfc #000000
+#000000 0;
+#X obj 120 229 s warps_\$0;
+#X msg 121 195 algo \$1;
+#X obj 178 509 r warps_\$0;
+#X obj 167 -9 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X msg 167 127 timbre \$1;
+#X obj 232 13 vradio 15 1 0 4 empty empty empty 0 -8 0 10 #fcfcfc #000000
+#000000 0;
+#X msg 232 78 osc_shape \$1;
+#X obj 346 130 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X msg 347 279 level1 \$1;
+#X obj 465 142 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X msg 465 278 level2 \$1;
+#X obj 549 85 vsl 15 128 1 127 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X msg 549 221 freq \$1;
+#X obj 667 308 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X msg 667 328 bypass \$1;
+#X obj 511 350 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X msg 511 370 easteregg \$1;
+#X floatatom 75 336 5 0 0 0 - - - 0;
+#X obj 381 438 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X floatatom 118 366 5 0 0 0 - - - 0;
+#X obj 437 54 pdcontrol;
+#X obj 90 68 vsl 15 128 0 8 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj 92 392 osc~ 86;
+#X obj 135 422 osc~ 133;
+#X msg 34 250 info;
+#X msg 381 460 plug level1 \$1;
+#X obj 373 370 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X msg 381 397 plug level2 \$1;
+#X floatatom 54 203 5 0 0 0 - - - 0;
+#X obj 658 250 mtof;
+#X floatatom 658 279 11 0 0 0 - - - 0;
+#X obj 164 298 osc~ 2;
+#X obj 248 328 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj 304 308 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj 248 464 line~ 0 50;
+#X obj 300 506 line~ 0 50;
+#X obj 573 557 sigmund~;
+#X floatatom 573 586 5 0 0 0 - - - 0;
+#X msg 267 171 0;
+#X msg 323 310 0;
+#X msg 440 6 browse https://mutable-instruments.net/modules/warps/manual
+;
+#X obj 145 561 mi/wraps~, f 31;
+#X connect 0 0 1 0;
+#X connect 4 0 3 0;
+#X connect 5 0 7 0;
+#X connect 5 0 34 0;
+#X connect 7 0 6 0;
+#X connect 8 0 47 0;
+#X connect 9 0 10 0;
+#X connect 10 0 6 0;
+#X connect 11 0 12 0;
+#X connect 12 0 6 0;
+#X connect 13 0 14 0;
+#X connect 14 0 6 0;
+#X connect 15 0 16 0;
+#X connect 16 0 6 0;
+#X connect 17 0 18 0;
+#X connect 17 0 35 0;
+#X connect 18 0 6 0;
+#X connect 19 0 20 0;
+#X connect 20 0 6 0;
+#X connect 21 0 22 0;
+#X connect 22 0 6 0;
+#X connect 23 0 28 0;
+#X connect 24 0 31 0;
+#X connect 25 0 29 0;
+#X connect 27 0 7 0;
+#X connect 28 0 47 0;
+#X connect 29 0 47 1;
+#X connect 30 0 6 0;
+#X connect 31 0 6 0;
+#X connect 32 0 33 0;
+#X connect 33 0 6 0;
+#X connect 35 0 36 0;
+#X connect 38 0 40 0;
+#X connect 39 0 41 0;
+#X connect 40 0 47 2;
+#X connect 41 0 47 3;
+#X connect 42 0 43 0;
+#X connect 44 0 38 0;
+#X connect 45 0 39 0;
+#X connect 46 0 26 0;
+#X connect 47 0 3 0;
+#X connect 47 0 2 0;
+#X connect 47 0 2 1;
+#X connect 47 0 42 0;
