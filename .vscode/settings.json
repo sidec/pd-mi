@@ -86,8 +86,9 @@
 		"locale": "cpp",
 		"queue": "cpp",
 		"stack": "cpp",
-		"xmemory": "cpp",
-		"xstring": "cpp",
+		"complex": "cpp",
+		"xlocnum": "cpp",
+		"xtr1common": "cpp",
 		"xutility": "cpp"
 	},
 }
