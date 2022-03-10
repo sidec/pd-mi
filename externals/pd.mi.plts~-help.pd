@@ -1,85 +1,12 @@
-#N canvas 212 91 1523 934 16;
-#X obj 653 818 output~;
-#X obj 754 454 s~ out_\$0;
-#X obj 917 456 s~ aux_\$0;
-#X obj 654 781 r~ out_\$0;
-#X obj 710 726 r~ aux_\$0;
-#X obj 646 532 else/oscilloscope~ 265 168 64 3 64 -1 1 0 0 0 0 30 30
-30 190 190 190 160 160 160 0 empty;
-#X obj 924 532 else/oscilloscope~ 267 170 64 3 64 -1 1 0 0 0 0 30 30
-30 190 190 190 160 160 160 0 empty;
+#N canvas 154 35 1920 1034 16;
 #X obj 1327 45 loadbang;
 #X msg 1327 74 \; pd dsp 1 \;;
-#X obj 42 37 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
-#X msg 43 176 frequency \$1;
-#X obj 715 382 r plts_\$0;
-#X obj 190 39 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
-#X msg 191 176 note \$1;
-#X obj 282 301 s plts_\$0;
-#X msg 662 334 info;
-#X obj 296 37 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
-#X msg 293 176 harmonics \$1;
-#X obj 440 37 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
-#X msg 437 176 timbre \$1;
-#X obj 561 37 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
-#X msg 558 176 morph \$1;
-#X msg 190 11 50;
-#X obj 755 426 pd.mi.plts~ @engine 6, f 39;
-#N canvas 986 236 605 509 trig_gate 0;
-#X obj 72 46 inlet;
-#X floatatom 72 75 5 0 0 0 - - - 0;
-#X obj 72 103 phasor~ 4;
-#X obj 76 292 delta~;
-#X obj 76 321 <~ 0;
-#X obj 76 350 outlet~;
-#X obj 164 160 <~ 0.5;
-#X obj 165 320 *~;
-#X obj 165 349 outlet~;
-#X obj 264 52 noise~;
-#X obj 266 228 sah~;
-#X obj 269 278 *~;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 2 0 3 0;
-#X connect 2 0 6 0;
-#X connect 3 0 4 0;
-#X connect 4 0 5 0;
-#X connect 6 0 7 0;
-#X connect 6 0 10 1;
-#X connect 7 0 8 0;
-#X connect 9 0 10 0;
-#X connect 10 0 11 0;
-#X connect 10 0 11 1;
-#X connect 11 0 7 1;
-#X restore 1071 347 pd trig_gate;
-#X floatatom 1069 319 5 0 0 0 - - - 0;
-#X obj 1060 202 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
-#X msg 1060 221 plug trigger \$1;
-#X obj 1061 250 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
-#X msg 1061 269 plug level \$1;
-#X obj 726 54 else/keyboard 17 80 4 3 0 0 empty empty;
-#X msg 725 172 note \$1;
 #X obj 1329 122 text define -k engine;
 #A set virtual analog synthesis \; waveshaping oscillator \; 2-op FM
 \; granular formant oscillator \; harmonic oscillator \; wavetable
 oscillator \; chord engine \; speech synthesis \; swarm engine \; filtered
 noise \; particle noise \; inharmonic string \; modal resonator \;
 bass drum model \; snare drum model \; hi-hat model \;;
-#X obj 124 524 text get engine;
-#X listbox 124 552 0 0 0 0 - - - 0;
-#X floatatom 76 458 5 0 15 0 - - - 0;
-#X msg 76 585 engine \$1;
-#X obj 76 486 t f f;
-#X obj 76 614 s plts_\$0;
-#X obj 79 399 loadbang;
-#X msg 79 428 6;
 #N canvas 367 250 1556 754 cb 0;
 #X floatatom 1088 726 5 0 100 0 - - - 0;
 #X obj 1087 754 / 100;
@@ -184,39 +111,11 @@ bass drum model \; snare drum model \; hi-hat model \;;
 #X connect 53 0 26 0;
 #X connect 54 0 27 0;
 #X restore 1336 326 pd cb;
-#X connect 3 0 0 0;
-#X connect 3 0 0 1;
-#X connect 7 0 8 0;
-#X connect 9 0 10 0;
-#X connect 10 0 14 0;
-#X connect 11 0 23 0;
-#X connect 12 0 13 0;
-#X connect 13 0 14 0;
-#X connect 15 0 23 0;
-#X connect 16 0 17 0;
-#X connect 17 0 14 0;
-#X connect 18 0 19 0;
-#X connect 19 0 14 0;
-#X connect 20 0 21 0;
-#X connect 21 0 14 0;
-#X connect 22 0 12 0;
-#X connect 23 0 1 0;
-#X connect 23 0 5 0;
-#X connect 23 1 2 0;
-#X connect 23 1 6 0;
-#X connect 24 0 23 6;
-#X connect 24 1 23 7;
-#X connect 25 0 24 0;
-#X connect 26 0 27 0;
-#X connect 27 0 23 0;
-#X connect 28 0 29 0;
-#X connect 29 0 23 0;
-#X connect 30 0 31 0;
-#X connect 31 0 23 0;
-#X connect 33 0 34 0;
-#X connect 35 0 37 0;
-#X connect 36 0 38 0;
-#X connect 37 0 36 0;
-#X connect 37 1 33 0;
-#X connect 39 0 40 0;
-#X connect 40 0 35 0;
+#X obj 45 106 pdcontrol;
+#X msg 45 50 browse https://mutable-instruments.net/modules/plaits/manual/
+;
+#X obj 39 239 plts/signal_inputs;
+#X obj 35 282 plts/trigger_inputs;
+#X obj 42 186 plts/basic;
+#X connect 0 0 1 0;
+#X connect 5 0 4 0;

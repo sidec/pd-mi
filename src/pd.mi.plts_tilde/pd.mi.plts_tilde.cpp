@@ -192,7 +192,17 @@ static void *myObj_new(t_symbol *s, int argc, t_atom *argv)
                         argc -= 2;
                         argv += 2;
                     }
-                } 
+                }
+                else
+                {
+                    argc -= 2;
+                    argv += 2;
+                }
+            }
+            else
+            {
+                argc -= 1;
+                argv += 1;
             }
         }
     }
@@ -286,7 +296,7 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
             const char *name = (*plug)->s_name;
             // logpost(self, 3, "value %s", name);
             // logpost(self, 3, "value %i", *value);
-            if (strcmp(name, "frequency") == 0)
+            if (strcmp(name, "freq") == 0)
             {
                 self->modulations.frequency_patched = *value != 0;
             }
@@ -298,7 +308,7 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
             {
                 self->modulations.morph_patched = *value != 0;
             }
-            else if (strcmp(name, "trigger") == 0)
+            else if (strcmp(name, "trig") == 0)
             {
                 logpost(self, 3, "%i", *value);
                 self->trigger_toggle = *value != 0;

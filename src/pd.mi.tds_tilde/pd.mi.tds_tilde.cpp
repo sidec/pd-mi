@@ -227,7 +227,7 @@ void *myObj_new(t_symbol *s, int argc, t_atom *argv)
                         argv += 2;
                     }
                 }
-                else if (strcmp(curarg->s_name, "@use_trigger") == 0)
+                else if (strcmp(curarg->s_name, "@use_trig") == 0)
                 {
                     if (argc >= 2)
                     {
@@ -249,6 +249,16 @@ void *myObj_new(t_symbol *s, int argc, t_atom *argv)
                         argv += 2;
                     }
                 }
+                else
+                {
+                    argc -= 2;
+                    argv += 2;
+                }
+            }
+            else
+            {
+                argc -= 1;
+                argv += 1;
             }
         }
     }
@@ -275,7 +285,7 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
             const char *name = (*plug)->s_name;
             // logpost(self, 3, "value %s", name);
             // logpost(self, 3, "value %i", *value);
-            if (strcmp(name, "trigger") == 0)
+            if (strcmp(name, "trig") == 0)
             {
                 self->use_trigger = (*value != 0);
                 self->trig_connected = self->use_trigger;
@@ -595,7 +605,7 @@ extern "C"
             logpost(this_class, 3, "pd.mi.tds~ @range: 0: CONTROL, 1: AUDIO");
 
             class_addmethod(this_class, (t_method)myObj_plug, gensym("plug"), A_GIMME, 0);
-            logpost(this_class, 3, "pd.mi.tds~ @use_trigger: 0|1");
+            logpost(this_class, 3, "pd.mi.tds~ @use_trig: 0|1");
             logpost(this_class, 3, "pd.mi.tds~ @use_clock: 0|1");
 
             logpost(this_class, 3, "pd.mi.tds~ by Przemysław Sanecki -- https://software-materialism.org");
