@@ -308,7 +308,7 @@ void myObj_plug(t_myObj *self, t_symbol *s, int argc, t_atom *argv)
             {
                 self->modulations.morph_patched = *value != 0;
             }
-            else if (strcmp(name, "trig") == 0)
+            else if (strcmp(name, "trig") == 0 || strcmp(name, "trigger") == 0)
             {
                 logpost(self, 3, "%i", *value);
                 self->trigger_toggle = *value != 0;
