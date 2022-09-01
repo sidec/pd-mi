@@ -123,7 +123,7 @@ static void *myObj_new(t_symbol *s, int argc, t_atom *argv)
         
         if(self->sigvs < kBlockSize) {
             pd_error((t_object*)self,
-                         "sigvs can't be smaller than %d samples\n", kBlockSize);
+                         "sigvs can't be smaller than %zu samples\n", kBlockSize);
             delete self;
             self = NULL;
             return self;
@@ -467,7 +467,7 @@ static void myObj_dsp(t_myObj *self, t_signal **sp)
 
     if (sys_getblksize() < kBlockSize)
     {
-        pd_error((t_object *)self, "sigvs can't be smaller than %d samples, sorry!", kBlockSize);
+        pd_error((t_object *)self, "sigvs can't be smaller than %zu samples, sorry!", kBlockSize);
         return;
     }
 

@@ -147,7 +147,7 @@ void *myObj_new(t_symbol *s, int argc, t_atom *argv)
         if (self->sigvs < kAudioBlockSize)
         {
             pd_error((t_object *)self,
-                     "sigvs can't be smaller than %d samples\n", kAudioBlockSize);
+                     "sigvs can't be smaller than %zu samples\n", kAudioBlockSize);
             delete self;
             self = NULL;
             return self;
@@ -343,7 +343,7 @@ void myObj_ratio(t_myObj *self, t_float m)
 void output_mode_setter(t_myObj *self, t_float m)
 {
     long _m = clamp((int)m, 0, 3);
-    verbose(3, "output mode %d", _m);
+    verbose(3, "output mode %ld", _m);
     self->output_mode = tides::OutputMode(_m);
     if (self->output_mode != self->previous_output_mode)
     {
@@ -520,7 +520,7 @@ void myObj_dsp(t_myObj *self, t_signal **sp)
 
     if (sys_getblksize() < kAudioBlockSize)
     {
-        pd_error((t_object *)self, "sigvs can't be smaller than %d samples, sorry!", kAudioBlockSize);
+        pd_error((t_object *)self, "sigvs can't be smaller than %zu samples, sorry!", kAudioBlockSize);
         return;
     }
     if (sys_getsr() != self->sr)
