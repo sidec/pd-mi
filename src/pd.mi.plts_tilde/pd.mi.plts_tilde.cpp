@@ -436,9 +436,15 @@ static t_int *myObj_perform(t_int *w)
         if (self->modulations.trigger_patched)
         {
             // calc sum of trigger input
-            double vectorsum = 0.0;
+            t_sample vectorsum = 0.0;
 #ifdef __APPLE__
+#if PD_FLOATSIZE == 32
+            vDSP_sve(trig_input + count, 1, &vectorsum, size);
+#elif PD_FLOATSIZE == 64
             vDSP_sveD(trig_input + count, 1, &vectorsum, size);
+#else // PD_FLOATSIZE
+#error Unexpected PD_FLOATSIZE
+#endif // PD_FLOATSIZE
 #else
             for (int i = 0; i < size; ++i)
                 vectorsum += trig_input[i + count];
