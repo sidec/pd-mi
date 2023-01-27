@@ -12,6 +12,8 @@ project("pd-mi")
 message(STATUS "Updating Git Submodules")
 execute_process(
 	COMMAND	git submodule update --init --recursive
+	COMMAND git submodule update --remote --merge
+	COMMAND git commit -am "gitlink to submodule_proj_name was updated"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
