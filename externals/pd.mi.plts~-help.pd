@@ -2,11 +2,7 @@
 #X obj 1327 45 loadbang;
 #X msg 1327 74 \; pd dsp 1 \;;
 #X obj 1329 122 text define -k engine;
-#A set virtual analog synthesis \; waveshaping oscillator \; 2-op FM
-\; granular formant oscillator \; harmonic oscillator \; wavetable
-oscillator \; chord engine \; speech synthesis \; swarm engine \; filtered
-noise \; particle noise \; inharmonic string \; modal resonator \;
-bass drum model \; snare drum model \; hi-hat model \;;
+#A set virtual analog synthesis \; waveshaping oscillator \; 2-op FM \; granular formant oscillator \; harmonic oscillator \; wavetable oscillator \; chord engine \; speech synthesis \; swarm engine \; filtered noise \; particle noise \; inharmonic string \; modal resonator \; bass drum model \; snare drum model \; hi-hat model \;;
 #N canvas 367 250 1556 754 cb 0;
 #X floatatom 1088 726 5 0 100 0 - - - 0;
 #X obj 1087 754 / 100;
@@ -18,8 +14,7 @@ bass drum model \; snare drum model \; hi-hat model \;;
 #X msg 1090 788 \$1 50;
 #X obj 1219 828 line~ 0 50;
 #X msg 1217 791 \$1 50;
-#X obj 1145 878 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 1145 878 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 1152 913 plug level \$1;
 #X text 324 206 morph;
 #X floatatom 77 209 5 -100 100 0 - - - 0;
@@ -50,14 +45,11 @@ bass drum model \; snare drum model \; hi-hat model \;;
 #X obj 208 314 s plts_\$0;
 #X text 727 42 small pots;
 #X obj 622 320 s plts_\$0;
-#X obj 930 220 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 930 220 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 930 240 plug morph \$1;
-#X obj 739 196 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 739 196 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 741 213 plug frequency \$1;
-#X obj 544 209 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 544 209 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 546 226 plug timbre \$1;
 #X msg 969 97 1;
 #X msg 22 244 0.5;
@@ -111,11 +103,10 @@ bass drum model \; snare drum model \; hi-hat model \;;
 #X connect 53 0 26 0;
 #X connect 54 0 27 0;
 #X restore 1336 326 pd cb;
-#X obj 45 106 pdcontrol;
-#X msg 45 50 browse https://mutable-instruments.net/modules/plaits/manual/
-;
+#X obj 47 80 pdcontrol;
 #X obj 39 239 plts/signal_inputs;
 #X obj 35 282 plts/trigger_inputs;
 #X obj 42 186 plts/basic;
+#X msg 47 49 browse https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/manual/, f 94;
 #X connect 0 0 1 0;
-#X connect 5 0 4 0;
+#X connect 8 0 4 0;

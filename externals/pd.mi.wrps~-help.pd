@@ -2,59 +2,45 @@
 #X obj 725 113 loadbang;
 #X msg 727 148 \; pd dsp 1 \;;
 #X obj 133 852 output~;
-#X obj 421 708 scope~ 312 237 194 3 128 -1 1 0 0 0 0 205 229 232 74
-79 77 96 98 102 0 empty;
+#X obj 421 708 scope~ 312 237 194 3 128 -1 1 0 0 0 0 205 229 232 74 79 77 96 98 102 0 empty;
 #X floatatom 428 648 5 0 0 0 - - - 0;
-#X obj 123 69 vradio 15 1 0 8 empty empty empty 0 -8 0 10 #fcfcfc #000000
-#000000 0;
+#X obj 123 69 vradio 15 1 0 8 empty empty empty 0 -8 0 10 #fcfcfc #000000 #000000 0;
 #X obj 120 229 s warps_\$0;
 #X msg 121 195 algo \$1;
 #X obj 178 509 r warps_\$0;
-#X obj 168 18 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 168 18 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 168 154 timbre \$1;
-#X obj 232 13 vradio 15 1 0 4 empty empty empty 0 -8 0 10 #fcfcfc #000000
-#000000 0;
+#X obj 232 13 vradio 15 1 0 4 empty empty empty 0 -8 0 10 #fcfcfc #000000 #000000 0;
 #X msg 232 78 osc_shape \$1;
-#X obj 346 130 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 346 130 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 347 279 level1 \$1;
-#X obj 465 142 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 465 142 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 465 278 level2 \$1;
-#X obj 549 85 vsl 15 128 1 15000 1 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 549 85 vsl 15 128 1 15000 1 0 empty empty empty 0 -9 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 549 221 freq \$1;
-#X obj 667 308 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 667 308 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 667 328 bypass \$1;
-#X obj 511 350 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 511 350 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 511 370 easteregg \$1;
 #X floatatom 75 336 5 0 0 0 - - - 0;
-#X obj 381 438 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 381 438 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X floatatom 118 366 5 0 0 0 - - - 0;
-#X obj 437 54 pdcontrol;
-#X obj 90 68 vsl 15 128 0 8 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 440 74 pdcontrol;
+#X obj 90 68 vsl 15 128 0 8 0 0 empty empty empty 0 -9 0 10 #fcfcfc #000000 #000000 0 1;
 #X obj 92 392 osc~ 86;
 #X obj 135 422 osc~ 133;
 #X msg 34 250 info;
 #X msg 381 460 plug level1 \$1;
-#X obj 373 370 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 373 370 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X msg 381 397 plug level2 \$1;
-#X msg 440 6 browse https://mutable-instruments.net/modules/warps/manual
-;
-#X obj 570 443 scope~ 312 237 8 3 256 -1 1 0 0 0 0 205 229 232 74 79
-77 96 98 102 0 empty;
+#X obj 570 443 scope~ 312 237 8 3 256 -1 1 0 0 0 0 205 229 232 74 79 77 96 98 102 0 empty;
 #X floatatom 586 153 5 0 0 0 - - - 0;
-#X obj 136 578 mi/wrps~ ---------------;
+#X obj 136 578 pd.mi.wrps~ ---------------;
+#X msg 440 6 browse https://pichenettes.github.io/mutable-instruments-documentation/modules/warps/manual/;
 #X connect 4 0 3 0;
 #X connect 5 0 7 0;
 #X connect 7 0 6 0;
-#X connect 8 0 37 0;
+#X connect 8 0 36 0;
 #X connect 9 0 10 0;
 #X connect 10 0 6 0;
 #X connect 11 0 12 0;
@@ -64,7 +50,7 @@
 #X connect 15 0 16 0;
 #X connect 16 0 6 0;
 #X connect 17 0 18 0;
-#X connect 17 0 36 0;
+#X connect 17 0 35 0;
 #X connect 18 0 6 0;
 #X connect 19 0 20 0;
 #X connect 20 0 6 0;
@@ -74,14 +60,14 @@
 #X connect 24 0 31 0;
 #X connect 25 0 29 0;
 #X connect 27 0 7 0;
-#X connect 28 0 37 0;
-#X connect 29 0 37 1;
+#X connect 28 0 36 0;
+#X connect 29 0 36 1;
 #X connect 30 0 6 0;
 #X connect 31 0 6 0;
 #X connect 32 0 33 0;
 #X connect 33 0 6 0;
-#X connect 34 0 26 0;
-#X connect 37 0 3 0;
-#X connect 37 0 2 0;
-#X connect 37 0 2 1;
-#X connect 37 1 35 0;
+#X connect 36 0 3 0;
+#X connect 36 0 2 0;
+#X connect 36 0 2 1;
+#X connect 36 1 34 0;
+#X connect 37 0 26 0;

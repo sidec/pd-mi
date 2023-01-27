@@ -1,8 +1,11 @@
 build*
 externals/*.dll.a
-externals/*.dll
+# externals/*.dll
 .vscode/*.log
 externals/*.exp
 externals/*.lib
 externals/*.pdb
 externals/*.ilk
+externals/x64
+externals/x86
+x86-build*
