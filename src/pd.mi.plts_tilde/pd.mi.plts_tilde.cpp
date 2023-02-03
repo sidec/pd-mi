@@ -273,7 +273,7 @@ void calc_note(t_myObj *self)
     if (octave < 8)
     {
         const double fine = self->transposition_ * 7.0;
-        self->patch.note = fine + static_cast<float>(octave) * 12.0 + 12.0;
+        self->patch.note =  fine + static_cast<float>(octave) * 12.0 + 12.0;
     }
     else
     {
@@ -451,7 +451,6 @@ static t_int *myObj_perform(t_int *w)
 #endif
             self->modulations.trigger = vectorsum;
         }
-
         // smooth out pitch changes
         // ONE_POLE(pitch_lp_, self->modulations.note, 0.7);
 
